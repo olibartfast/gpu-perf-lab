@@ -1,6 +1,6 @@
 # Building on Google Colab
 
-> Audience: humans · Applies to: CUDA · Last reviewed: 2026-10
+> Audience: humans · Applies to: CUDA · Last reviewed: 2026-11
 
 Google Colab's free GPU runtime can build and run this repository's CUDA
 kernels. Select a GPU runtime, clone the repository, configure CMake for that
@@ -25,24 +25,24 @@ Confirm the install, provision a GPU runtime, and open a remote shell:
 
 ```bash
 colab version
-colab new -s gpu-playground --gpu T4
-colab ssh -s gpu-playground
+colab new -s gpu-perf-lab --gpu T4
+colab ssh -s gpu-perf-lab
 ```
 
 Inside the remote shell, clone and build without the notebook `!`/`%` prefixes:
 
 ```bash
-git clone https://github.com/olibartfast/gpu-playground.git
-cmake -S gpu-playground -B gpu-playground/build -DCMAKE_CUDA_ARCHITECTURES=75
-cmake --build gpu-playground/build -j"$(nproc)"
-./gpu-playground/build/source/softmax/softmax
+git clone https://github.com/olibartfast/gpu-perf-lab.git
+cmake -S gpu-perf-lab -B gpu-perf-lab/build -DCMAKE_CUDA_ARCHITECTURES=75
+cmake --build gpu-perf-lab/build -j"$(nproc)"
+./gpu-perf-lab/build/source/softmax/softmax
 ```
 
 Exit the remote shell and release the runtime when finished:
 
 ```bash
 exit
-colab stop -s gpu-playground
+colab stop -s gpu-perf-lab
 ```
 
 `colab sessions` lists active runtimes, and `colab run --gpu T4 script.py`
@@ -65,11 +65,11 @@ Confirm that the GPU is visible:
 
 ```bash
 # Clone the repository
-!git clone https://github.com/olibartfast/gpu-playground.git
+!git clone https://github.com/olibartfast/gpu-perf-lab.git
 
 # Create build directory and configure
-!mkdir -p gpu-playground/build
-%cd gpu-playground/build
+!mkdir -p gpu-perf-lab/build
+%cd gpu-perf-lab/build
 
 # Configure with CMake (T4 = compute capability 7.5)
 !cmake .. -DCMAKE_CUDA_ARCHITECTURES=75
@@ -107,7 +107,7 @@ print(f'Detected compute capability: {result.stdout.strip()} → use -DCMAKE_CUD
 Building one target is faster. For example, to build and run `softmax`:
 
 ```bash
-%cd /content/gpu-playground/build
+%cd /content/gpu-perf-lab/build
 !cmake --build . --target softmax
 !./source/softmax/softmax
 ```
@@ -164,10 +164,10 @@ from google.colab import drive
 drive.mount('/content/drive')
 
 # Clone to Drive (first time only)
-!git clone https://github.com/olibartfast/gpu-playground.git /content/drive/MyDrive/gpu-playground
+!git clone https://github.com/olibartfast/gpu-perf-lab.git /content/drive/MyDrive/gpu-perf-lab
 
 # Build from Drive
-%cd /content/drive/MyDrive/gpu-playground
+%cd /content/drive/MyDrive/gpu-perf-lab
 !mkdir -p build && cd build && cmake .. -DCMAKE_CUDA_ARCHITECTURES=75 && cmake --build . -j$(nproc)
 ```
 
@@ -187,7 +187,7 @@ Compute:
 If `ncu` is available:
 
 ```bash
-%cd /content/gpu-playground
+%cd /content/gpu-perf-lab
 !bash cuda_perf_analysis.sh ./build/source/gemm/gemm
 ```
 

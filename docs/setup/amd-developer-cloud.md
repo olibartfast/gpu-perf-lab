@@ -1,6 +1,6 @@
 # Running on AMD Developer Cloud
 
-> Audience: humans, agents · Applies to: all · Last reviewed: 2026-10
+> Audience: humans, agents · Applies to: all · Last reviewed: 2026-11
 
 Use a ROCm-enabled AMD GPU Droplet (AMD Developer Cloud, built on DigitalOcean
 infrastructure) to build the HIP implementations in
@@ -42,19 +42,19 @@ From the local repository root, package the current files, including uncommitted
 HIP sources. Choose a fresh remote directory to preserve existing checkouts:
 
 ```bash
-tar -czf /tmp/gpu-playground-hip.tar.gz \
+tar -czf /tmp/gpu-perf-lab-hip.tar.gz \
   CMakeLists.txt CMakePresets.json cmake source
 scp -o IdentitiesOnly=yes -i "$AMD_KEY" \
-  /tmp/gpu-playground-hip.tar.gz "$AMD_HOST":/tmp/
+  /tmp/gpu-perf-lab-hip.tar.gz "$AMD_HOST":/tmp/
 ssh -o IdentitiesOnly=yes -i "$AMD_KEY" "$AMD_HOST"
 ```
 
 On the instance:
 
 ```bash
-mkdir -p /root/gpu-playground-hip-run
-tar -xzf /tmp/gpu-playground-hip.tar.gz -C /root/gpu-playground-hip-run
-cd /root/gpu-playground-hip-run
+mkdir -p /root/gpu-perf-lab-hip-run
+tar -xzf /tmp/gpu-perf-lab-hip.tar.gz -C /root/gpu-perf-lab-hip-run
+cd /root/gpu-perf-lab-hip-run
 ```
 
 Use a directory under your home when logging in as a non-root user. The archive
@@ -138,7 +138,7 @@ The run used `root@YOUR_INSTANCE_IP`, an AMD Instinct MI300X VF (`gfx942`), CMak
 HIP `7.16.26385-0000000`, and AMD clang `24.0.0git`. The installed path was
 `/opt/rocm/llvm/bin/clang++`; the hostname/image label mentioned ROCm 10.1,
 which should not be confused with the version reported by `hipconfig`.
-Sources and logs were placed under `/root/gpu-playground-hip-20261023`.
+Sources and logs were placed under `/root/gpu-perf-lab-hip-20261023`.
 The validated build-input archive has SHA-256
 `c39b833122e1d144dab4811adbedff0eb4b5303eeba92a5ec06eefb56043b78d`.
 
@@ -167,8 +167,8 @@ From the laptop:
 ```bash
 mkdir -p /tmp/amd-developer-cloud-results
 scp -o IdentitiesOnly=yes -i "$AMD_KEY" \
-  "$AMD_HOST":/root/gpu-playground-hip-run/build/hip/build.log \
-  "$AMD_HOST":/root/gpu-playground-hip-run/build/hip/ctest.log \
+  "$AMD_HOST":/root/gpu-perf-lab-hip-run/build/hip/build.log \
+  "$AMD_HOST":/root/gpu-perf-lab-hip-run/build/hip/ctest.log \
   /tmp/amd-developer-cloud-results/
 ```
 

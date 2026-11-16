@@ -1,7 +1,7 @@
-# GPU Playground
+# GPU Perf Lab
 
-A collection of standalone GPU kernels written in C++/CUDA, HIP, OpenCL, and GLSL, built as a
-learning and benchmarking playground. Each kernel pairs a CPU reference with one
+A collection of standalone GPU kernels written in C++/CUDA, HIP, OpenCL, and GLSL, built for
+learning, benchmarking, and GPU performance engineering. Each kernel pairs a CPU reference with one
 or more GPU backends and a shared test harness, so correctness and performance
 can be compared directly. The project is inspired by resources from the
 [GPU Mode Group](https://github.com/gpu-mode) and [LeetGPU](https://leetgpu.com).
@@ -237,7 +237,7 @@ ctest --test-dir build/opencl_cpp --output-on-failure
 ## Project Structure
 
 ```
-gpu_playground/
+gpu-perf-lab/
 ├── source/                    ← all C++/CUDA/OpenCL source code
 │   ├── utils/                 ← shared utility libraries
 │   │   ├── cuda_helpers.h         ← CUDA_CHECK macro + getTime()
